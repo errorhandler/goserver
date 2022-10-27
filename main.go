@@ -8,17 +8,17 @@ import (
 	"github.com/go-chi/chi/v5"
 )
 
-func helloWorld() http.HandlerFunc {
-	type request struct {
-		Name string `json:"name"`
-	}
-	type response struct {
-		Fool bool `json:"fool"`
-	}
+type helloWorldRequest struct {
+	Name string `json:"name"`
+}
+type helloWorldResponse struct {
+	Fool bool `json:"fool"`
+}
 
-	return WrapHandler(func(req *request) (*response, error) {
+func helloWorld() http.HandlerFunc {
+	return WrapHandler(func(req *helloWorldRequest) (*helloWorldResponse, error) {
 		if strings.EqualFold(req.Name, "joe") {
-			return &response{
+			return &helloWorldResponse{
 				Fool: false,
 			}, nil
 		}
@@ -30,7 +30,7 @@ func helloWorld() http.HandlerFunc {
 			}
 		}
 
-		return &response{
+		return &helloWorldResponse{
 			Fool: true,
 		}, nil
 	})
